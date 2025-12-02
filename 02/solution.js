@@ -71,11 +71,6 @@ function hasRepeatedPattern(s) {
   return (s + s).indexOf(s, 1) < s.length;
 }
 
-function isInvalid2(n) {
-  const s = n.toString();
-  return hasRepeatedPattern(s);
-}
-
 function pt2() {
   const invalids = [];
 
@@ -83,7 +78,7 @@ function pt2() {
     const lo = ranges[r][0];
     const hi = ranges[r][1];
     for (let i = lo; i <= hi; i++) {
-      if (isInvalid2(i)) invalids.push(i);
+      if (hasRepeatedPattern(i.toString())) invalids.push(i);
     }
   }
 
