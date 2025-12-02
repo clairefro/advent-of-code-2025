@@ -28,7 +28,7 @@ function pt1() {
   console.log(invalids.reduce((a, b) => a + b, 0));
 }
 
-// pt1();
+pt1();
 
 // ============
 
@@ -68,7 +68,6 @@ function pt1() {
 // }
 
 function hasRepeatedPattern(s) {
-  if (s.length < 2) return false;
   return (s + s).indexOf(s, 1) < s.length;
 }
 
