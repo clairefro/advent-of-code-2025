@@ -80,7 +80,7 @@ function run2(rows) {
   while (running) {
     const _c = rm(mut);
     c += _c;
-    const p = rows
+    const p = mut
       .map((r) => r.join(""))
       .join("")
       .match(/@/g).length;
