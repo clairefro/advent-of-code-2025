@@ -40,7 +40,8 @@ function rankDangerousJoltage(bank) {
 
   const bs = bank.split("").map(Number);
 
-  // find index and val of first + highest # in range k - (J_SIZE - i)
+  // find index and val of first + highest # in acceptable range
+  // acceptable range = ((last find + 1) -> (joltage size - current digit of joltage))
   // set index of last find (k)
   for (let i = 0; i < js.length; i++) {
     for (let k = nxtI; k <= bs.length - (J_SIZE - i); k++) {
