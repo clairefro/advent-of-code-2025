@@ -41,21 +41,69 @@ function beam(input) {
 }
 
 // console.log(beam(raw));
-const beamed = beam(raw)
-  .split("\n")
-  .map((r) => r.split(""));
+const beamed = beam(raw);
 
-let cnt = 0;
-for (let y = 0; y < beamed.length; y++) {
-  for (let x = 0; x < beamed[0].length; x++) {
-    if (beamed[y - 1] && beamed[y][x]) {
-      if (beamed[y][x] === SPLITTER && beamed[y - 1][x] === BEAM) {
-        cnt += 1;
+const split = beamed.split("\n").map((r) => r.split(""));
+
+let splitterCount = 0;
+for (let y = 0; y < split.length; y++) {
+  for (let x = 0; x < split[0].length; x++) {
+    if (split[y - 1] && split[y][x]) {
+      if (split[y][x] === SPLITTER && split[y - 1][x] === BEAM) {
+        splitterCount += 1;
       }
     }
   }
 }
 console.log("pt 1");
-console.log(cnt);
 
-////
+console.log(beam(raw));
+console.log(splitterCount);
+
+// ======
+
+function compress(input) {
+  return input
+    .split("\n")
+    .filter((row) => row.includes(SPLITTER) || row.includes(START))
+    .join("\n");
+}
+
+function countTimelinesCompressed(input) {
+  const compressed = compress(input);
+  const rows = compressed.split("\n").map((r) => r.split(""));
+  const H = rows.length;
+  const W = rows[0].length;
+
+  const startRow = rows.findIndex((r) => r.includes(START));
+  if (startRow === -1) throw new Error("Start not found in compressed input");
+  const startX = rows[startRow].indexOf(START);
+
+  // counts vector
+  let counts = Array(W).fill(0n);
+  counts[startX] = 1n;
+
+  for (let i = startRow + 1; i < H; i++) {
+    const row = rows[i];
+    const newCounts = Array(W).fill(0n);
+    for (let x = 0; x < W; x++) {
+      const ways = counts[x];
+      if (ways === 0n) continue;
+      if (row[x] === SPLITTER) {
+        if (x - 1 >= 0) newCounts[x - 1] += ways;
+        if (x + 1 < W) newCounts[x + 1] += ways;
+      } else {
+        newCounts[x] += ways;
+      }
+    }
+    counts = newCounts;
+  }
+
+  return counts.reduce((a, b) => a + b, 0n);
+}
+
+console.log("pt2");
+console.log(
+  "routes (compressed) for input:",
+  countTimelinesCompressed(raw).toString()
+);
