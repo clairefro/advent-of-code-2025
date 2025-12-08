@@ -1,6 +1,8 @@
 const load = require("../util/load");
 const raw = load(__dirname + "/input.txt");
 
+/** TODAY'S SOLUTION I NEEDED AI HELP TO LEARN. THIS IS NOT MY WORK. I NEEDED TO LEARN ABOUT MAX HEAPS AND UNION FIND */
+
 /** ------------------------------------- */
 // Parse input into an array of 3D points: [[x,y,z], ...]
 const coords = raw.split("\n").map((n) => n.split(",").map(Number));
